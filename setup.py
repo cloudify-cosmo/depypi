@@ -26,25 +26,25 @@ def read(*parts):
 
 
 setup(
-    name='wagon',
-    version='0.3.0',
-    url='https://github.com/cloudify-cosmo/wagon',
+    name='depypi',
+    version='0.0.1',
+    url='https://github.com/cloudify-cosmo/depypi',
     author='Gigaspaces',
     author_email='cosmo-admin@gigaspaces.com',
     license='LICENSE',
     platforms='All',
-    description='Creates Python Wheel based archives.',
+    description='Uploads registers and verifies Pypi operations.',
     long_description=read('README.rst'),
-    packages=['wagon'],
+    packages=['depypi'],
     include_package_data=True,
     entry_points={
         'console_scripts': [
-            'wagon = wagon.wagon:main',
+            'depypi = depypi.depypi:main',
         ]
     },
     install_requires=[
-        "wheel>=0.24.0",
-        "virtualenv>=12.1",
+        "requests>=2.7.0",
+        "sh>=1.11",
         "click==4.0",
     ]
 )
