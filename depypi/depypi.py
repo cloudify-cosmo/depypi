@@ -247,10 +247,9 @@ class PypiHandler():
             os.remove(self.pypirc_file)
 
 
-@click.group('pypi')
-def pypi():
-    """Upload, register and query packages on pypi and pypitest
-    """
+@click.group()
+def main():
+    pass
 
 
 @click.command()
@@ -322,6 +321,6 @@ def isOnPypi(path, test):
         lgr.info("package {0} of version {1} is not on {2}".format(
             pypi_handler.name, pypi_handler.version, pypi_handler.target))
 
-pypi.add_command(isOnPypi)
-pypi.add_command(upload)
-pypi.add_command(register)
+main.add_command(isOnPypi)
+main.add_command(upload)
+main.add_command(register)
