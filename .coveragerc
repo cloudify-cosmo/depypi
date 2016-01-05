@@ -1,0 +1,3 @@
+[run]
+omit = depypi/dictconfig.py
+       depypi/six.py
