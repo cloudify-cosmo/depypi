@@ -52,6 +52,7 @@ class PypiHandler():
         :param target: pypi for live and pypitest for test
         :return: None
         """
+        logger.configure()
         if credentials:
             if isinstance(credentials, tuple):
                 self.pypiuser = credentials[0]
