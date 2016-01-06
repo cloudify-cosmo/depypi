@@ -30,7 +30,7 @@ PYPI_TEMPLATE = "[distutils]\n" \
                 "[pypi]\n" \
                 "repository=https://pypi.python.org/pypi\n" \
                 "username={0}\n" \
-                "password={1}\n\n"
+                "password={1}"
 
 PYPITEST_TEMPLATE = "[distutils]\n" \
                     "index-servers =\n" \
@@ -186,8 +186,9 @@ class PypiHandler():
         :param expected_version: expected_version
         :return: True or False based on availability
         """
-        url = "https://{0}.python.org/packages/source/p/{1}/{1}-{2}.tar.gz" \
-              "".format(self.test_target, package_name, expected_version)
+        url = "https://{0}.python.org/packages/source/{3}/{1}/{1}-{2}.tar.gz" \
+              "".format(self.test_target, package_name, expected_version,
+                        package_name[0])
         return self._check_url(url)
 
     def _create_credentials_string(self):
