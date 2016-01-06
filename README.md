@@ -92,6 +92,8 @@ INFO - package depypi of version 0.0.1 is available on testpypi
 ## Logic
 
 upload and register operation have no default target and require a flag (either test or force) to run
+
 isonpypi defaults to checking pypi and if called with --test flag with check pypitest instead
+
 If ~/.pypirc already exists it will be backed up and restored after an operation should you use the credentials flag.
 
