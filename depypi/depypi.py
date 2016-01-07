@@ -42,13 +42,13 @@ def main():
 @click.option('-c', '--credentials', nargs=2, required=False, type=str,
               help='use specific credentials for upload '
                    '(not what is in .pypirc). usage: crt -c user password')
-def upload(path, credentials, test, force):
+def upload(path, credentials, test, force, dist_type):
     """upload package to pypi
     """
     if force:
-        pypi_handler = PypiHandler(path, credentials, target="pypi")
+        pypi_handler = PypiHandler(path, credentials, dist_type, target="pypi")
     elif test:
-        pypi_handler = PypiHandler(path, credentials)
+        pypi_handler = PypiHandler(path, credentials, dist_type)
     else:
         lgr.error("Target not specified. Please use --force for pypi or "
                   "--test for pypitest")
@@ -68,7 +68,7 @@ def upload(path, credentials, test, force):
 @click.option('-c', '--credentials', nargs=2, required=False, type=str,
               help='use specific credentials for registration '
                    '(not what is in .pypirc). usage: crt -c user password')
-def register(path, credentials, test, force):
+def register(path, credentials, test, force, dist_type):
     """register package to pypi
     """
     if force:

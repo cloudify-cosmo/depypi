@@ -42,8 +42,8 @@ PYPITEST_TEMPLATE = "[distutils]\n" \
 
 
 class PypiHandler():
-    def __init__(self, path='', credentials=None, target="pypitest",
-                 dist_type='sdist'):
+    def __init__(self, path='', credentials=None, dist_type=None,
+                 target="pypitest"):
         """A Pypi handler object for uploading, registering and testing.
         :param path: location of setup.py
         :param credentials: credentials to use for upload or registation
@@ -73,7 +73,7 @@ class PypiHandler():
         self.version = self.get_package_version()
         self.credentials = credentials
         self.cleanup_pypirc = False
-        self.dist_type = dist_type
+        self.dist_type = dist_type or 'sdist'
         self.pypirc_file = os.path.expanduser('~/.pypirc')
         self.pypirc_backup_file = os.path.expanduser('~/.pypirc.crt.backup')
 
