@@ -42,7 +42,8 @@ PYPITEST_TEMPLATE = "[distutils]\n" \
 
 
 class PypiHandler():
-    def __init__(self, path='', credentials=None, target="pypitest"):
+    def __init__(self, path='', credentials=None, target="pypitest",
+                 dist_type='sdist'):
         """A Pypi handler object for uploading, registering and testing.
         :param path: location of setup.py
         :param credentials: credentials to use for upload or registation
@@ -72,6 +73,7 @@ class PypiHandler():
         self.version = self.get_package_version()
         self.credentials = credentials
         self.cleanup_pypirc = False
+        self.dist_type = dist_type
         self.pypirc_file = os.path.expanduser('~/.pypirc')
         self.pypirc_backup_file = os.path.expanduser('~/.pypirc.crt.backup')
 
@@ -109,13 +111,13 @@ class PypiHandler():
         args = ("setup.py", "--name")
         return ''.join(self._command(args=args).splitlines())
 
-    def upload(self, target="pypitest"):
+    def upload(self):
         """Uploads a package to Pypi\TestPypi and verify it is available
         :param target: pypi for live and pypitest for testpypi
         :return: None
         """
         self._verify_and_inject_credentials()
-        args = ("setup.py", "sdist", "upload", "-r", target)
+        args = ("setup.py", self.dist_type, "upload", "-r", self.target)
         lgr.info(self._command(args=args))
         try:
             if self.is_package_of_specific_version_available_on_pypi(
@@ -131,13 +133,13 @@ class PypiHandler():
             if self.cleanup_pypirc:
                 self._cleanup_injected_credentials()
 
-    def register(self, target="pypitest"):
+    def register(self):
         """Registers a package to Pypi or TestPypi and verify it is registered
         :param target: pypi for live and pypitest for testpypi
         :return: None
         """
         self._verify_and_inject_credentials()
-        args = ("setup.py", "register", "-r", target)
+        args = ("setup.py", "register", "-r", self.target)
         lgr.info(self._command(args=args))
         try:
             if self.is_package_of_specific_version_registered_on_pypi(

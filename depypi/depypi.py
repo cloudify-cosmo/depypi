@@ -19,6 +19,7 @@ import sys
 import click
 
 from .pypi_handler import PypiHandler
+from .version_checker import VersionChecker
 from . import logger
 
 lgr = logger.init()
@@ -30,6 +31,8 @@ def main():
 
 
 @click.command()
+@click.option('-d', '--dist-type', default=False, required=False,
+              help='distribution type. default is sdist')
 @click.option('-f', '--force', is_flag=True, default=False, required=False,
               help='upload to Pypi')
 @click.option('-t', '--test', is_flag=True, default=False, required=False,
@@ -54,6 +57,8 @@ def upload(path, credentials, test, force):
 
 
 @click.command()
+@click.option('-d', '--dist-type', default=False, required=False,
+              help='distribution type. default is sdist')
 @click.option('-f', '--force', is_flag=True, default=False, required=False,
               help='register to Pypi')
 @click.option('-t', '--test', is_flag=True, default=False, required=False,
@@ -98,6 +103,17 @@ def isOnPypi(path, test):
         lgr.info("package {0} of version {1} is not on {2}".format(
             pypi_handler.name, pypi_handler.version, pypi_handler.target))
 
+
+@click.command()
+@click.option('-p', '--path', required=False, type=str,
+              help='location of setup.py')
+def hasUnlockedDeps(path):
+    """Checks if the package has unlocked dependencies
+    """
+    version_checker = VersionChecker(path)
+    version_checker.check_package()
+
+main.add_command(hasUnlockedDeps)
 main.add_command(isOnPypi)
 main.add_command(upload)
 main.add_command(register)
