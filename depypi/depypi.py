@@ -105,15 +105,33 @@ def isOnPypi(path, test):
 
 
 @click.command()
+@click.option('-ef', '--extrafiles', required=False, type=str,
+              help='add extra files to check like dev-requirements.txt')
 @click.option('-p', '--path', required=False, type=str,
               help='location of setup.py')
-def hasUnlockedDeps(path):
+def getdeps(path, extrafiles):
     """Checks if the package has unlocked dependencies
     """
-    version_checker = VersionChecker(path)
-    version_checker.check_package()
+    version_checker = VersionChecker(path, extrafiles)
+    lgr.info("The package in has the following dependencies: {0}".format(
+            version_checker.get_all_dependencies()))
 
-main.add_command(hasUnlockedDeps)
+
+# @click.command()
+# @click.option('-ef', '--extrafiles', required=False, type=str,
+#               help='add extra files to check like dev-requirements.txt')
+# @click.option('-p', '--path', required=False, type=str,
+#               help='location of setup.py')
+# def getSubDeps(path, extrafiles):
+#     """Checks gets all subdependencies (recursively)
+#     """
+#     version_checker = VersionChecker(path, extrafiles)
+#     lgr.info("The package in has the following dependencies: {0}".format(
+#             version_checker.get_all_sub_dependencies()))
+#
+#
+# main.add_command(getSubDeps)
+main.add_command(getdeps)
 main.add_command(isOnPypi)
 main.add_command(upload)
 main.add_command(register)
